@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    container_name: dataops_postgres
+    environment:
+      POSTGRES_DB: dataops_db
+      POSTGRES_USER: dataops_user
+      POSTGRES_PASSWORD: dataops_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - dataops_network
+
+  # FastAPI Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: dataops_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://dataops_user:dataops_password@postgres:5432/dataops_db
+      - SECRET_KEY=your-secret-key-here
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_USER=your-email@gmail.com
+      - SMTP_PASSWORD=your-app-password
+    volumes:
+      - ./backend:/app
+      - ./data:/app/data
+    depends_on:
+      - postgres
+    networks:
+      - dataops_network
+    restart: unless-stopped
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: dataops_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - dataops_network
+    restart: unless-stopped
+
+  # ML Pipeline Service
+  ml_pipeline:
+    build:
+      context: ./ml_pipeline
+      dockerfile: Dockerfile
+    container_name: dataops_ml_pipeline
+    environment:
+      - DATABASE_URL=postgresql://dataops_user:dataops_password@postgres:5432/dataops_db
+      - API_URL=http://backend:8000
+    volumes:
+      - ./ml_pipeline:/app
+      - ./data:/app/data
+      - ./models:/app/models
+    depends_on:
+      - postgres
+      - backend
+    networks:
+      - dataops_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  dataops_network:
+    driver: bridge 

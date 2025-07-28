@@ -1,0 +1,11 @@
+id,name,age,email,salary,department,hire_date
+1,John Doe,30,john.doe@company.com,75000,Engineering,2020-01-15
+2,Jane Smith,28,jane.smith@company.com,72000,Marketing,2019-03-20
+3,Bob Johnson,35,bob.johnson@company.com,85000,Engineering,2018-07-10
+4,Alice Brown,32,alice.brown@company.com,78000,Sales,2020-11-05
+5,Charlie Wilson,29,charlie.wilson@company.com,70000,Marketing,2021-02-14
+6,Diana Davis,31,diana.davis@company.com,82000,Engineering,2019-09-30
+7,Edward Miller,33,edward.miller@company.com,79000,Sales,2020-06-22
+8,Fiona Garcia,27,fiona.garcia@company.com,68000,Marketing,2021-04-18
+9,George Martinez,34,george.martinez@company.com,88000,Engineering,2018-12-03
+10,Helen Rodriguez,26,helen.rodriguez@company.com,65000,Sales,2021-08-12 
