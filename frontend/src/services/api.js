@@ -3,13 +3,13 @@ import axios from 'axios';
 // Get API URL from environment or use localhost for development
 const API_URL = process.env.REACT_APP_API_URL || 
                 (process.env.NODE_ENV === 'production' 
-                  ? window.location.origin
+                  ? `${window.location.protocol}//${window.location.host}`
                   : 'http://localhost:8000');
 
-// Create axios instance
+// Create axios instance with updated configuration
 const api = axios.create({
   baseURL: API_URL,
-  timeout: 10000,
+  timeout: 15000, // Increased timeout for production
   headers: {
     'Content-Type': 'application/json',
   },
