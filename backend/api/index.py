@@ -21,7 +21,7 @@ def root():
     })
 
 # Dashboard endpoints
-@app.route('/v1/dashboard/overview')
+@app.route('/api/v1/dashboard/overview')
 def dashboard_overview():
     return jsonify({
         "status": "success",
@@ -34,7 +34,7 @@ def dashboard_overview():
         }
     })
 
-@app.route('/v1/dashboard/trends')
+@app.route('/api/v1/dashboard/trends')
 def dashboard_trends():
     return jsonify({
         "status": "success",
@@ -72,7 +72,7 @@ def dashboard_trends():
         }
     })
 
-@app.route('/v1/dashboard/system-status')
+@app.route('/api/v1/dashboard/system-status')
 def system_status():
     return jsonify({
         "status": "success",
@@ -84,7 +84,7 @@ def system_status():
         }
     })
 
-@app.route('/v1/dashboard/metrics')
+@app.route('/api/v1/dashboard/metrics')
 def dashboard_metrics():
     return jsonify({
         "status": "success",
@@ -96,7 +96,7 @@ def dashboard_metrics():
         }
     })
 
-@app.route('/v1/dashboard/recent-activity')
+@app.route('/api/v1/dashboard/recent-activity')
 def recent_activity():
     return jsonify({
         "status": "success",
@@ -129,7 +129,7 @@ def recent_activity():
     })
 
 # Data Quality endpoints
-@app.route('/v1/data-quality/metrics')
+@app.route('/api/v1/data-quality/metrics')
 def data_quality_metrics():
     return jsonify({
         "status": "success",
@@ -141,7 +141,7 @@ def data_quality_metrics():
         }
     })
 
-@app.route('/v1/data-quality/issues')
+@app.route('/api/v1/data-quality/issues')
 def data_quality_issues():
     return jsonify({
         "status": "success",
@@ -149,7 +149,7 @@ def data_quality_issues():
     })
 
 # Model Monitoring endpoints
-@app.route('/v1/model-monitoring/models')
+@app.route('/api/v1/model-monitoring/models')
 def get_models():
     return jsonify({
         "status": "success",
@@ -157,7 +157,7 @@ def get_models():
     })
 
 # Alerts endpoints
-@app.route('/v1/alerts')
+@app.route('/api/v1/alerts')
 def get_alerts():
     return jsonify({
         "status": "success",

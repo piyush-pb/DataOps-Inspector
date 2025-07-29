@@ -36,38 +36,39 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.error('API Error:', error);
+    console.error('API Error:', error.response?.data || error.message);
     return Promise.reject(error);
   }
 );
 
 // API endpoints
 export const dataQualityAPI = {
-  getMetrics: () => api.get('/v1/data-quality/metrics'),
-  uploadData: (data) => api.post('/v1/data-quality/upload', data),
-  getIssues: () => api.get('/v1/data-quality/issues'),
-  getHistory: () => api.get('/v1/data-quality/history'),
+  getMetrics: () => api.get('/api/v1/data-quality/metrics'),
+  uploadData: (data) => api.post('/api/v1/data-quality/upload', data),
+  getIssues: () => api.get('/api/v1/data-quality/issues'),
+  getHistory: () => api.get('/api/v1/data-quality/history'),
 };
 
 export const modelMonitoringAPI = {
-  getModels: () => api.get('/v1/model-monitoring/models'),
-  getPerformance: (modelId) => api.get(`/v1/model-monitoring/performance/${modelId}`),
-  getDrift: (modelId) => api.get(`/v1/model-monitoring/drift/${modelId}`),
-  deployModel: (modelData) => api.post('/v1/model-monitoring/deploy', modelData),
+  getModels: () => api.get('/api/v1/model-monitoring/models'),
+  getPerformance: (modelId) => api.get(`/api/v1/model-monitoring/performance/${modelId}`),
+  getDrift: (modelId) => api.get(`/api/v1/model-monitoring/drift/${modelId}`),
+  deployModel: (modelData) => api.post('/api/v1/model-monitoring/deploy', modelData),
 };
 
 export const alertsAPI = {
-  getAlerts: () => api.get('/v1/alerts'),
-  createAlert: (alertData) => api.post('/v1/alerts', alertData),
-  updateAlert: (alertId, alertData) => api.put(`/v1/alerts/${alertId}`, alertData),
-  deleteAlert: (alertId) => api.delete(`/v1/alerts/${alertId}`),
+  getAlerts: () => api.get('/api/v1/alerts'),
+  createAlert: (alertData) => api.post('/api/v1/alerts', alertData),
+  updateAlert: (alertId, alertData) => api.put(`/api/v1/alerts/${alertId}`, alertData),
+  deleteAlert: (alertId) => api.delete(`/api/v1/alerts/${alertId}`),
 };
 
 export const dashboardAPI = {
-  getOverview: () => api.get('/v1/dashboard/overview'),
-  getMetrics: () => api.get('/v1/dashboard/metrics'),
-  getRecentActivity: () => api.get('/v1/dashboard/recent-activity'),
-  getTrends: () => api.get('/v1/dashboard/trends'),
+  getOverview: () => api.get('/api/v1/dashboard/overview'),
+  getMetrics: () => api.get('/api/v1/dashboard/metrics'),
+  getRecentActivity: () => api.get('/api/v1/dashboard/recent-activity'),
+  getTrends: () => api.get('/api/v1/dashboard/trends'),
+  getSystemStatus: () => api.get('/api/v1/dashboard/system-status'),
 };
 
 export default api; 
