@@ -1,0 +1,17 @@
+{
+  "name": "dataops-inspector",
+  "version": "1.0.0",
+  "description": "DataOps Inspector - Automated Data Quality & Model Drift Platform",
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "dev": "concurrently \"cd backend && uvicorn app.main:app --reload\" \"cd frontend && npm start\"",
+    "start": "cd frontend && npm start",
+    "install-deps": "cd frontend && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 

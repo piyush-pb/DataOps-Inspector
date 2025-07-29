@@ -8,11 +8,15 @@ __pycache__/
 env/
 venv/
 .venv/
+pip-log.txt
+pip-delete-this-directory.txt
 
-# Build outputs
-build/
-dist/
+# Production builds
+frontend/build/
+frontend/dist/
 *.egg-info/
+dist/
+build/
 
 # Environment variables
 .env
@@ -21,21 +25,11 @@ dist/
 .env.test.local
 .env.production.local
 
-# IDE files
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS files
-.DS_Store
-Thumbs.db
-
 # Logs
-*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.log
 
 # Runtime data
 pids
@@ -45,12 +39,25 @@ pids
 
 # Coverage directory used by tools like istanbul
 coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
 
 # Dependency directories
 jspm_packages/
 
 # Optional npm cache directory
 .npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
 
 # Optional REPL history
 .node_repl_history
@@ -61,108 +68,57 @@ jspm_packages/
 # Yarn Integrity file
 .yarn-integrity
 
-# Docker
-.dockerignore
-
-# Test reports
-testsprite_tests/tmp/
-
-# Python
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# PyInstaller
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.coverage
-.coverage.*
+# parcel-bundler cache (https://parceljs.org/)
 .cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
+.parcel-cache
 
-# Translations
-*.mo
-*.pot
+# Next.js build output
+.next
 
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
+# Nuxt.js build / generate output
+.nuxt
 
-# Flask stuff:
-instance/
-.webassets-cache
+# Gatsby files
+.cache/
+public
 
-# Scrapy stuff:
-.scrapy
+# Storybook build outputs
+.out
+.storybook-out
 
-# Sphinx documentation
-docs/_build/
+# Temporary folders
+tmp/
+temp/
 
-# PyBuilder
-target/
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# Jupyter Notebook
-.ipynb_checkpoints
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
-# pyenv
-.python-version
+# Database
+*.db
+*.sqlite
+*.sqlite3
 
-# celery beat schedule file
-celerybeat-schedule
+# ML models
+models/*.pkl
+models/*.joblib
 
-# SageMath parsed files
-*.sage.py
+# Data files
+data/
+uploads/
 
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json 
+# Vercel
+.vercel 
+.vercel
