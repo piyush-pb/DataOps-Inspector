@@ -2,8 +2,11 @@
   "version": 2,
   "builds": [
     {
-      "src": "frontend/**",
-      "use": "@vercel/static"
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "zeroConfig": true
+      }
     },
     {
       "src": "backend/api/index.py",
@@ -16,20 +19,11 @@
       "dest": "/backend/api/index.py"
     },
     {
-      "src": "/v1/(.*)",
-      "dest": "/backend/api/index.py"
-    },
-    {
-      "src": "/health",
-      "dest": "/backend/api/index.py"
-    },
-    {
       "handle": "filesystem"
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/$1",
-      "continue": true
+      "dest": "/"
     }
   ]
 } 
