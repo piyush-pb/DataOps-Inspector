@@ -36,15 +36,15 @@ function Dashboard() {
       
       // Fetch overview data
       const overviewResponse = await dashboardAPI.getOverview();
-      setOverview(overviewResponse.data);
+      setOverview(overviewResponse.data.data); // Access nested data
       
       // Fetch metrics data
       const metricsResponse = await dashboardAPI.getMetrics();
-      setMetrics(metricsResponse.data);
+      setMetrics(metricsResponse.data.data); // Access nested data
       
       // Fetch recent activity
       const activityResponse = await dashboardAPI.getRecentActivity();
-      setRecentActivity(activityResponse.data);
+      setRecentActivity(activityResponse.data.data); // Access nested data
       
     } catch (err) {
       setError('Failed to load dashboard data');
@@ -81,7 +81,7 @@ function Dashboard() {
         <Grid item xs={12} sm={6} md={3}>
           <MetricCard
             title="Data Quality Score"
-            value={overview?.data?.data_quality_score || 0}
+            value={overview?.data_quality_score || 0}
             icon={<DataQualityIcon />}
             color="primary"
             unit="%"
@@ -91,7 +91,7 @@ function Dashboard() {
         <Grid item xs={12} sm={6} md={3}>
           <MetricCard
             title="Active Models"
-            value={overview?.data?.active_models || 0}
+            value={overview?.active_models || 0}
             icon={<ModelIcon />}
             color="secondary"
             unit=""
@@ -100,7 +100,7 @@ function Dashboard() {
         <Grid item xs={12} sm={6} md={3}>
           <MetricCard
             title="Total Datasets"
-            value={overview?.data?.total_datasets || 0}
+            value={overview?.total_datasets || 0}
             icon={<DataQualityIcon />}
             color="success"
             unit=""
@@ -109,7 +109,7 @@ function Dashboard() {
         <Grid item xs={12} sm={6} md={3}>
           <MetricCard
             title="Active Alerts"
-            value={overview?.data?.alerts_count || 0}
+            value={overview?.alerts_count || 0}
             icon={<AlertsIcon />}
             color="warning"
             unit=""
@@ -131,7 +131,7 @@ function Dashboard() {
                     System Uptime
                   </Typography>
                   <Typography variant="h6">
-                    {metrics?.data?.system_uptime || 100}%
+                    {metrics?.system_uptime || 100}%
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>
@@ -139,22 +139,19 @@ function Dashboard() {
                     Model Accuracy
                   </Typography>
                   <Typography variant="h6">
-                    {metrics?.data?.model_accuracy || 0}%
+                    {metrics?.model_accuracy || 0}%
                   </Typography>
                 </Grid>
               </Grid>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Recent Activity
-              </Typography>
-              <RecentActivity activities={recentActivity} />
-            </CardContent>
-          </Card>
+      </Grid>
+
+      {/* Recent Activity */}
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <RecentActivity activities={recentActivity || []} />
         </Grid>
       </Grid>
     </Box>

@@ -1,351 +1,304 @@
 [
   {
     "id": "TC001",
-    "title": "CSV File Upload Success",
-    "description": "Verify CSV file can be uploaded successfully and triggers ETL processing with transformation logs.",
+    "title": "Successful CSV Data Upload and ETL Processing",
+    "description": "Verify that a user can upload a valid CSV file and initiate ETL processing successfully with transformation logging.",
     "category": "functional",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to the data ingestion upload page."
+        "description": "Navigate to the data source upload interface."
       },
       {
         "type": "action",
-        "description": "Upload a valid CSV file with typical tabular data."
+        "description": "Upload a well-formatted CSV file containing tabular data."
+      },
+      {
+        "type": "action",
+        "description": "Initiate the ETL process for the uploaded CSV data."
       },
       {
         "type": "assertion",
-        "description": "Check that upload completes without errors."
+        "description": "Verify ETL process completes without errors."
       },
       {
         "type": "assertion",
-        "description": "Verify ETL processing starts automatically."
+        "description": "Check transformation logs are accurately recorded in the system logs."
       },
       {
         "type": "assertion",
-        "description": "Confirm transformation logs are generated and stored."
-      },
-      {
-        "type": "assertion",
-        "description": "Confirm uploaded data appears in the dashboard data quality metrics."
+        "description": "Ensure the data quality checks start running and results are stored in the database."
       }
     ]
   },
   {
     "id": "TC002",
-    "title": "CSV File Upload with Malformed CSV",
-    "description": "Check system behavior when uploading a malformed or corrupted CSV file.",
+    "title": "CSV Upload with Missing Values and Data Type Mismatches",
+    "description": "Test system behavior when CSV data contains missing values and incorrect data types during upload and ETL processing.",
     "category": "error handling",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to data ingestion upload page."
+        "description": "Upload a CSV file with some missing values and data type mismatches."
       },
       {
         "type": "action",
-        "description": "Upload a corrupted or malformed CSV file."
+        "description": "Start ETL processing on the file."
       },
       {
         "type": "assertion",
-        "description": "Verify upload is rejected with a clear error message."
+        "description": "Confirm that missing values and data type mismatches are detected and logged as data quality issues."
       },
       {
         "type": "assertion",
-        "description": "Ensure no ETL processing or data ingestion is triggered."
+        "description": "Check that data quality score reflects the presence of errors appropriately."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that alerts are generated for critical missing data or type mismatches."
       }
     ]
   },
   {
     "id": "TC003",
-    "title": "API Data Source Connection Success",
-    "description": "Validate successful connection and ingestion from an external API data source.",
+    "title": "API Data Source Connection and Data Ingestion",
+    "description": "Validate connection to a public API data source and ingestion into the platform with proper logging and transformation tracking.",
     "category": "functional",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Configure API connection with valid API endpoint and credentials."
+        "description": "Access the data source configuration interface."
       },
       {
         "type": "action",
-        "description": "Trigger initial data ingestion from API."
+        "description": "Configure connection parameters for a supported public API."
+      },
+      {
+        "type": "action",
+        "description": "Trigger data ingestion via the API."
       },
       {
         "type": "assertion",
-        "description": "Confirm data is retrieved successfully."
+        "description": "Verify data is ingested successfully into the system."
       },
       {
         "type": "assertion",
-        "description": "Confirm ETL processing is applied with transformation logs."
-      },
-      {
-        "type": "assertion",
-        "description": "Validate updated data appears in the dashboard data quality metrics."
+        "description": "Ensure transformation logs capture details of API data processing."
       }
     ]
   },
   {
     "id": "TC004",
-    "title": "Data Quality Check - Missing Values Detection",
-    "description": "Verify system detects missing values in ingested data and reports correctly on dashboard.",
+    "title": "Real-time Data Quality Metrics Display on Dashboard",
+    "description": "Check that the dashboard displays updated data quality metrics, health scorecards, and trend charts in real time after data processing.",
     "category": "functional",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Ingest a dataset containing deliberate missing values in some columns."
+        "description": "Upload or connect to a data source and initiate ETL processing."
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the dashboard page."
       },
       {
         "type": "assertion",
-        "description": "Check data quality monitoring identifies missing values per column."
+        "description": "Ensure data quality metrics are displayed with correct values."
       },
       {
         "type": "assertion",
-        "description": "Confirm missing values are reflected on the data health scorecard and trend charts."
+        "description": "Verify health scorecards update dynamically."
+      },
+      {
+        "type": "assertion",
+        "description": "Check that trend charts show historical data trends correctly."
       }
     ]
   },
   {
     "id": "TC005",
-    "title": "Data Quality Check - Duplicate Records Detection",
-    "description": "Ensure system detects and reports duplicate records in ingested data.",
+    "title": "ML Model Deployment and Live Inference Monitoring",
+    "description": "Verify ML engineers can deploy a sample model and the dashboard correctly displays live inference metrics and drift detection.",
     "category": "functional",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Ingest dataset with known duplicate rows."
+        "description": "Deploy a sample ML model using the model monitoring interface."
+      },
+      {
+        "type": "action",
+        "description": "Start live inference processing with sample input data."
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the model monitoring dashboard."
       },
       {
         "type": "assertion",
-        "description": "Verify duplicate records detection flags duplicates correctly."
+        "description": "Verify live accuracy, F1 score, and drift metrics are displayed and updated in real time."
       },
       {
         "type": "assertion",
-        "description": "Confirm duplicates count appears in dashboard metrics."
+        "description": "Confirm that Evidently AI-based drift detection alerts are triggered if drift is detected."
       }
     ]
   },
   {
     "id": "TC006",
-    "title": "Data Quality Check - Schema Drift Detection",
-    "description": "Validate detection of schema drift such as added, removed, or renamed columns.",
+    "title": "Alert System - Email and In-App Notifications for Data Quality Failures",
+    "description": "Check that the alert system generates timely email and in-app notifications when critical data quality issues or model performance drops occur.",
     "category": "functional",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Ingest initial dataset with base schema."
-      },
-      {
-        "type": "action",
-        "description": "Ingest subsequent dataset with an intentional schema change (e.g., missing or added column)."
+        "description": "Simulate a data quality failure or model performance drop event."
       },
       {
         "type": "assertion",
-        "description": "Verify schema drift is detected and flagged in dashboard alerts."
+        "description": "Verify an alert is generated and logged in the system."
       },
       {
         "type": "assertion",
-        "description": "Ensure schema changes are logged with detected differences."
+        "description": "Check that the user receives the alert via in-app notification."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm the alert email is sent to registered users promptly."
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure alerts trigger within 60 seconds of the issue occurrence."
       }
     ]
   },
   {
     "id": "TC007",
-    "title": "Data Quality Check - Data Type Mismatch Detection",
-    "description": "Confirm system identifies and reports data type mismatches in ingested data.",
-    "category": "functional",
-    "priority": "High",
+    "title": "Dashboard Load Performance",
+    "description": "Ensure dashboard key metrics and components load completely within 5 seconds for a smooth user experience.",
+    "category": "performance",
+    "priority": "Medium",
     "steps": [
       {
         "type": "action",
-        "description": "Ingest dataset with columns containing data type violations (e.g., string in numeric field)."
+        "description": "Navigate to the main dashboard."
       },
       {
         "type": "assertion",
-        "description": "Check data type mismatches are detected for affected columns."
+        "description": "Measure time taken for all key metrics, scorecards, and charts to fully render."
       },
       {
         "type": "assertion",
-        "description": "Verify that mismatches are visible on quality dashboards and alerts."
+        "description": "Verify the load time does not exceed 5 seconds under normal network conditions."
       }
     ]
   },
   {
     "id": "TC008",
-    "title": "Data Quality Check - Outlier Detection",
-    "description": "Validate that system detects outliers based on defined statistical thresholds.",
+    "title": "Schema Drift Detection and Alerting",
+    "description": "Validate that schema drift in data sources is detected correctly and corresponding alerts are generated.",
     "category": "functional",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Ingest dataset containing known outliers."
+        "description": "Alter the data source schema by adding, removing, or changing column data types."
+      },
+      {
+        "type": "action",
+        "description": "Trigger data ingestion and subsequent quality checks."
       },
       {
         "type": "assertion",
-        "description": "Verify outlier detection mechanism flags outliers correctly."
+        "description": "Confirm that schema drift is identified and logged."
       },
       {
         "type": "assertion",
-        "description": "Confirm outlier information is displayed in dashboard visualizations."
+        "description": "Check that an alert is generated and sent via email and in-app notification."
       }
     ]
   },
   {
     "id": "TC009",
-    "title": "ML Model Deployment and Live Monitoring",
-    "description": "Test deployment of a scikit-learn model and verify live inference metrics update in the dashboard.",
-    "category": "functional",
-    "priority": "High",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Upload and deploy a valid scikit-learn model via the model monitoring interface."
-      },
-      {
-        "type": "action",
-        "description": "Send inference requests with test data."
-      },
-      {
-        "type": "assertion",
-        "description": "Confirm live inference metrics (accuracy, F1 score) update correctly on the dashboard."
-      },
-      {
-        "type": "assertion",
-        "description": "Verify feature and prediction distribution visualizations display properly."
-      }
-    ]
-  },
-  {
-    "id": "TC010",
-    "title": "ML Model Drift Detection Accuracy",
-    "description": "Ensure the system accurately identifies feature and prediction distribution shifts using Evidently AI.",
-    "category": "functional",
-    "priority": "High",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Deploy a model and feed baseline data to establish initial distributions."
-      },
-      {
-        "type": "action",
-        "description": "Inject data with simulated drift in feature distribution."
-      },
-      {
-        "type": "assertion",
-        "description": "Verify drift detection triggers for affected features."
-      },
-      {
-        "type": "assertion",
-        "description": "Check that alerts are generated and displayed in the dashboard."
-      }
-    ]
-  },
-  {
-    "id": "TC011",
-    "title": "Multi-channel Alert - Email and In-app Notification Delivery",
-    "description": "Validate multi-channel alerts trigger and are delivered to users as configured upon data quality failure or model drift.",
-    "category": "functional",
-    "priority": "High",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Configure alert thresholds and email settings in settings interface."
-      },
-      {
-        "type": "action",
-        "description": "Trigger a data quality failure or model drift event."
-      },
-      {
-        "type": "assertion",
-        "description": "Verify email alert is received by configured recipients."
-      },
-      {
-        "type": "assertion",
-        "description": "Confirm in-app dashboard notification is displayed promptly."
-      }
-    ]
-  },
-  {
-    "id": "TC012",
-    "title": "Dashboard Performance and Responsiveness",
-    "description": "Test the dashboard loads real-time key metrics, charts, and historical logs within performance criteria and is responsive across devices.",
-    "category": "functional",
-    "priority": "Medium",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to the dashboard page with active monitoring data."
-      },
-      {
-        "type": "assertion",
-        "description": "Confirm dashboard loads within 5 seconds."
-      },
-      {
-        "type": "assertion",
-        "description": "Verify all charts and metric cards display correctly and update in real-time."
-      },
-      {
-        "type": "action",
-        "description": "Resize browser and access dashboard on different devices."
-      },
-      {
-        "type": "assertion",
-        "description": "Check dashboard remains usable and layouts adapt appropriately."
-      }
-    ]
-  },
-  {
-    "id": "TC013",
-    "title": "Authentication Enforcement and Security",
-    "description": "Verify that system authentication restricts access to authorized users and protects data privacy.",
+    "title": "Authentication Enabled - Access Restriction and Security",
+    "description": "Verify that enabling basic authentication restricts dashboard and data access to authorized users only.",
     "category": "security",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Attempt to access backend API endpoints and frontend pages without authentication."
-      },
-      {
-        "type": "assertion",
-        "description": "Ensure access is denied and user is redirected to login."
+        "description": "Enable basic authentication in application settings."
       },
       {
         "type": "action",
-        "description": "Login with valid credentials."
+        "description": "Attempt to access the dashboard without credentials."
       },
       {
         "type": "assertion",
-        "description": "Verify authorized access to all permitted features."
+        "description": "Verify access is denied and login prompt is shown."
       },
       {
         "type": "action",
-        "description": "Attempt SQL injection or other common attacks via input fields."
+        "description": "Log in with valid credentials."
       },
       {
         "type": "assertion",
-        "description": "Confirm inputs are sanitized and attacks are prevented."
+        "description": "Confirm successful access to dashboard and authorized data."
+      },
+      {
+        "type": "action",
+        "description": "Try to access API endpoints without authentication."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify API access is denied."
       }
     ]
   },
   {
-    "id": "TC014",
-    "title": "Settings Management Interface Functionality",
-    "description": "Confirm users can configure email alerts, thresholds, and system parameters through settings UI and changes persist.",
+    "id": "TC010",
+    "title": "Data Transformation and Metrics Logging Accuracy",
+    "description": "Check that all data transformations performed during ETL and model inference are accurately logged and metrics stored properly in the database.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Upload data and initiate ETL process."
+      },
+      {
+        "type": "action",
+        "description": "Deploy and run ML model inference."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify transformation logs match the expected processing operations."
+      },
+      {
+        "type": "assertion",
+        "description": "Check that data quality metrics and model performance metrics are correctly recorded in PostgreSQL."
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "User Settings Management Interface Functionality",
+    "description": "Validate users can view, update, and save application settings successfully through the settings management interface.",
     "category": "functional",
     "priority": "Medium",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to settings management page."
+        "description": "Navigate to the settings page on the dashboard."
       },
       {
         "type": "action",
-        "description": "Modify email notification recipients and alert thresholds."
+        "description": "Modify available configuration settings such as alert preferences or authentication settings."
       },
       {
         "type": "action",
@@ -353,165 +306,132 @@
       },
       {
         "type": "assertion",
-        "description": "Confirm updated settings are persisted and applied."
-      },
+        "description": "Verify that settings are persisted and applied correctly."
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "System Resilience - Handling Corrupt or Invalid CSV Upload",
+    "description": "Test system behavior when uploading a corrupt or invalid CSV file to ensure graceful error handling and user notification.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
       {
         "type": "action",
-        "description": "Trigger an alert event to verify new settings take effect."
+        "description": "Attempt to upload a corrupted or malformed CSV file."
       },
       {
         "type": "assertion",
-        "description": "Check alerts follow the updated parameters."
+        "description": "Verify the system rejects the file upload."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm an informative error message is displayed to the user."
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure no partial or invalid data is processed or stored."
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Recent Activity Feed Updates",
+    "description": "Verify recent activity feed displays system events such as data quality checks, model deployments, and alerts correctly and updates in real time.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Perform data upload, ETL, and model deployment actions."
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the recent activity feed component."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify all recent system events are shown with correct timestamps and descriptions."
+      },
+      {
+        "type": "assertion",
+        "description": "Check that new events appear in the feed without page refresh."
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "Containerized Deployment Process Verification",
+    "description": "Test that the application can be deployed and run successfully using Docker Compose with proper environment configuration.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Pull the repository and review deployment documentation."
+      },
+      {
+        "type": "action",
+        "description": "Run the application stack using Docker Compose with sample environment configurations."
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure all services start without errors."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm that frontend and backend components are accessible and functional."
       }
     ]
   },
   {
     "id": "TC015",
-    "title": "Docker Compose Multi-service Deployment Validation",
-    "description": "Validate that backend, frontend, ML pipeline, and PostgreSQL services deploy correctly with Docker Compose and communicate as expected.",
-    "category": "functional",
-    "priority": "High",
+    "title": "Error Boundary and Loading State Handling",
+    "description": "Verify that the application gracefully handles errors and shows loading states appropriately for API calls and page rendering.",
+    "category": "error handling",
+    "priority": "Medium",
     "steps": [
       {
         "type": "action",
-        "description": "Run docker-compose up with multi-service setup."
+        "description": "Simulate backend API failure or slow responses."
+      },
+      {
+        "type": "action",
+        "description": "Navigate through different pages such as Dashboard, Data Quality, and Model Monitoring."
       },
       {
         "type": "assertion",
-        "description": "Verify all services start without errors."
+        "description": "Confirm loading spinners appear during data fetch delays."
       },
       {
         "type": "assertion",
-        "description": "Confirm backend API endpoints are reachable from frontend container."
-      },
-      {
-        "type": "assertion",
-        "description": "Validate ML pipeline service connects properly to backend and database."
-      },
-      {
-        "type": "assertion",
-        "description": "Check database service is accessible and initialized with correct schema."
+        "description": "Check that error boundary components display user-friendly messages upon failures."
       }
     ]
   },
   {
     "id": "TC016",
-    "title": "Dashboard Drill-down Navigation and Logs Exploration",
-    "description": "Test users can interact with dashboard alerts and charts to drill down into detailed logs and historical data.",
-    "category": "functional",
-    "priority": "Medium",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Trigger data quality or model alerts."
-      },
-      {
-        "type": "action",
-        "description": "Click alert notifications on the dashboard."
-      },
-      {
-        "type": "assertion",
-        "description": "Verify navigation to detailed log pages or charts."
-      },
-      {
-        "type": "action",
-        "description": "Use interactive charts to view trend history and metrics at different time resolutions."
-      },
-      {
-        "type": "assertion",
-        "description": "Ensure data visualizations update and filter properly."
-      }
-    ]
-  },
-  {
-    "id": "TC017",
-    "title": "Handle Large File Uploads and Scalability",
-    "description": "Verify system can handle large CSV file uploads gracefully with proper progress indication and no crashes.",
-    "category": "functional",
-    "priority": "Medium",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Attempt to upload a large CSV file near upper size limits."
-      },
-      {
-        "type": "assertion",
-        "description": "Check upload progress is visible to the user."
-      },
-      {
-        "type": "assertion",
-        "description": "Confirm file uploads successfully without timeout or failure."
-      },
-      {
-        "type": "assertion",
-        "description": "Validate that ETL processing and data quality checks complete for large data."
-      }
-    ]
-  },
-  {
-    "id": "TC018",
-    "title": "API Endpoint Validation and Error Handling",
-    "description": "Test that all API endpoints properly validate inputs and return appropriate error responses for invalid requests.",
-    "category": "error handling",
-    "priority": "High",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Send malformed or incomplete payloads to each backend REST API endpoint."
-      },
-      {
-        "type": "assertion",
-        "description": "Verify 4xx error codes returned with meaningful error messages."
-      },
-      {
-        "type": "action",
-        "description": "Attempt unauthorized access to restricted endpoints."
-      },
-      {
-        "type": "assertion",
-        "description": "Check for 401/403 error responses."
-      }
-    ]
-  },
-  {
-    "id": "TC019",
-    "title": "Real-time Data Quality Metrics Update",
-    "description": "Verify that data quality metrics on dashboard update in real-time or near-real-time after ingestion events.",
+    "title": "Outlier Detection in Data Quality Checks",
+    "description": "Validate that the system detects statistical outliers in ingested data and reflects the findings on the dashboard.",
     "category": "functional",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Ingest new tabular data triggering a data quality check."
+        "description": "Upload a dataset containing known outlier data points."
       },
-      {
-        "type": "assertion",
-        "description": "Observe the dashboard refresh and display updated metrics within 5 seconds."
-      },
-      {
-        "type": "assertion",
-        "description": "Confirm historical data quality trends are updated accordingly."
-      }
-    ]
-  },
-  {
-    "id": "TC020",
-    "title": "Model Inference Handling with Invalid Data",
-    "description": "Check system behavior when ML inference is requested with data that does not conform to model expectations.",
-    "category": "error handling",
-    "priority": "Medium",
-    "steps": [
       {
         "type": "action",
-        "description": "Deploy a model and send inference requests with input data violating expected schema or types."
+        "description": "Begin ETL processing and data quality analysis."
       },
       {
         "type": "assertion",
-        "description": "Ensure system rejects invalid inference request gracefully with error message."
+        "description": "Verify outliers are flagged and reported in data quality metrics."
       },
       {
         "type": "assertion",
-        "description": "Verify no incorrect metrics or crashes occur."
+        "description": "Check outlier presence is reflected in scorecards and trend charts."
       }
     ]
   }
