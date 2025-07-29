@@ -3,7 +3,7 @@ import axios from 'axios';
 // Get API URL from environment or use localhost for development
 const API_URL = process.env.REACT_APP_API_URL || 
                 (process.env.NODE_ENV === 'production' 
-                  ? 'https://data-ops-inspector-2g6z8goxy-piyush-pbs-projects.vercel.app/api'
+                  ? window.location.origin
                   : 'http://localhost:8000');
 
 // Create axios instance
