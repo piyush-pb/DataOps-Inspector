@@ -44,7 +44,8 @@ function Dashboard() {
       
       // Fetch recent activity
       const activityResponse = await dashboardAPI.getRecentActivity();
-      setRecentActivity(activityResponse.data.data); // Access nested data
+      // Ensure we're setting an array, even if empty
+      setRecentActivity(Array.isArray(activityResponse?.data?.data) ? activityResponse.data.data : []);
       
     } catch (err) {
       setError('Failed to load dashboard data');
@@ -151,7 +152,7 @@ function Dashboard() {
       {/* Recent Activity */}
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <RecentActivity activities={recentActivity || []} />
+          <RecentActivity activities={recentActivity} />
         </Grid>
       </Grid>
     </Box>
