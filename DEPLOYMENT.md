@@ -11,7 +11,7 @@ This guide will help you deploy your DataOps Inspector application to Vercel.
 ## Step 1: Database Setup
 
 ### Option A: Supabase (Recommended)
-1. Go to [supabase.com](https://supabase.com) and create a new project
+1. Go to [supabase.com](yeshttps://supabase.com) and create a new project
 2. Get your database connection string from Settings > Database
 3. Note down the connection string for later use
 

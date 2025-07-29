@@ -53,7 +53,8 @@ function App() {
     try {
       const response = await fetch('/api/v1/dashboard/system-status');
       const data = await response.json();
-      setSystemStatus(data.overall_status);
+      // Fix: Access the correct nested structure
+      setSystemStatus(data.data?.overall_status || 'operational');
     } catch (error) {
       console.error('Error checking system status:', error);
       setSystemStatus('error');

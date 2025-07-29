@@ -67,6 +67,7 @@ export const dashboardAPI = {
   getOverview: () => api.get('/v1/dashboard/overview'),
   getMetrics: () => api.get('/v1/dashboard/metrics'),
   getRecentActivity: () => api.get('/v1/dashboard/recent-activity'),
+  getTrends: () => api.get('/v1/dashboard/trends'),
 };
 
 export default api; 

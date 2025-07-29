@@ -12,16 +12,15 @@ import {
   DataUsage as DataQualityIcon,
   Psychology as ModelIcon,
   Notifications as AlertsIcon,
-  TrendingUp as TrendingUpIcon,
 } from '@mui/icons-material';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 import MetricCard from '../components/MetricCard';
 import RecentActivity from '../components/RecentActivity';
+import { dashboardAPI } from '../services/api';
 
 function Dashboard() {
   const [overview, setOverview] = useState(null);
-  const [trends, setTrends] = useState(null);
+  const [metrics, setMetrics] = useState(null);
   const [recentActivity, setRecentActivity] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -33,21 +32,19 @@ function Dashboard() {
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
+      setError(null);
       
       // Fetch overview data
-      const overviewResponse = await fetch('/api/v1/dashboard/overview');
-      const overviewData = await overviewResponse.json();
-      setOverview(overviewData);
+      const overviewResponse = await dashboardAPI.getOverview();
+      setOverview(overviewResponse.data);
       
-      // Fetch trends data
-      const trendsResponse = await fetch('/api/v1/dashboard/trends');
-      const trendsData = await trendsResponse.json();
-      setTrends(trendsData);
+      // Fetch metrics data
+      const metricsResponse = await dashboardAPI.getMetrics();
+      setMetrics(metricsResponse.data);
       
       // Fetch recent activity
-      const activityResponse = await fetch('/api/v1/dashboard/recent-activity');
-      const activityData = await activityResponse.json();
-      setRecentActivity(activityData);
+      const activityResponse = await dashboardAPI.getRecentActivity();
+      setRecentActivity(activityResponse.data);
       
     } catch (err) {
       setError('Failed to load dashboard data');
@@ -84,7 +81,7 @@ function Dashboard() {
         <Grid item xs={12} sm={6} md={3}>
           <MetricCard
             title="Data Quality Score"
-            value={overview?.data_quality?.average_quality_score || 0}
+            value={overview?.data?.data_quality_score || 0}
             icon={<DataQualityIcon />}
             color="primary"
             unit="%"
@@ -93,87 +90,71 @@ function Dashboard() {
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <MetricCard
-            title="Model Accuracy"
-            value={overview?.model_monitoring?.average_accuracy || 0}
+            title="Active Models"
+            value={overview?.data?.active_models || 0}
             icon={<ModelIcon />}
             color="secondary"
-            unit="%"
-            formatValue={(value) => (value * 100).toFixed(1)}
+            unit=""
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <MetricCard
+            title="Total Datasets"
+            value={overview?.data?.total_datasets || 0}
+            icon={<DataQualityIcon />}
+            color="success"
+            unit=""
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <MetricCard
             title="Active Alerts"
-            value={overview?.alerts?.unresolved_alerts || 0}
+            value={overview?.data?.alerts_count || 0}
             icon={<AlertsIcon />}
             color="warning"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <MetricCard
-            title="Data Sources"
-            value={overview?.data_quality?.total_sources || 0}
-            icon={<TrendingUpIcon />}
-            color="success"
+            unit=""
           />
         </Grid>
       </Grid>
 
-      {/* Charts */}
+      {/* Metrics Section */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid item xs={12} md={6}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                Data Quality Trends
+                System Metrics
               </Typography>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={trends?.quality_trends || []}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line
-                    type="monotone"
-                    dataKey="average_score"
-                    stroke="#1976d2"
-                    strokeWidth={2}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <Typography variant="body2" color="textSecondary">
+                    System Uptime
+                  </Typography>
+                  <Typography variant="h6">
+                    {metrics?.data?.system_uptime || 100}%
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body2" color="textSecondary">
+                    Model Accuracy
+                  </Typography>
+                  <Typography variant="h6">
+                    {metrics?.data?.model_accuracy || 0}%
+                  </Typography>
+                </Grid>
+              </Grid>
             </CardContent>
           </Card>
         </Grid>
-        
         <Grid item xs={12} md={6}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                Model Performance Trends
+                Recent Activity
               </Typography>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={trends?.performance_trends || []}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line
-                    type="monotone"
-                    dataKey="average_accuracy"
-                    stroke="#dc004e"
-                    strokeWidth={2}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+              <RecentActivity activities={recentActivity} />
             </CardContent>
           </Card>
-        </Grid>
-      </Grid>
-
-      {/* Recent Activity */}
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <RecentActivity activities={recentActivity} />
         </Grid>
       </Grid>
     </Box>

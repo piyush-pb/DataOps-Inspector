@@ -18,6 +18,9 @@ import {
 } from '@mui/icons-material';
 
 function RecentActivity({ activities }) {
+  // Ensure activities is always an array
+  const safeActivities = Array.isArray(activities) ? activities : [];
+
   const getActivityIcon = (type, status) => {
     switch (type) {
       case 'data_quality':
@@ -58,10 +61,10 @@ function RecentActivity({ activities }) {
           Recent Activity
         </Typography>
         <List aria-labelledby="recent-activity-title">
-          {activities.map((activity, index) => (
+          {safeActivities.map((activity, index) => (
             <ListItem 
               key={index} 
-              divider={index < activities.length - 1}
+              divider={index < safeActivities.length - 1}
               aria-label={`Activity ${index + 1}: ${activity.title}`}
             >
               <ListItemIcon>
@@ -95,6 +98,11 @@ function RecentActivity({ activities }) {
             </ListItem>
           ))}
         </List>
+        {safeActivities.length === 0 && (
+          <Typography variant="body2" color="textSecondary" align="center">
+            No recent activity
+          </Typography>
+        )}
       </CardContent>
     </Card>
   );

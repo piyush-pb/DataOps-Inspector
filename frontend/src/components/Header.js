@@ -38,12 +38,16 @@ const StyledAppBar = styled(AppBar, {
 
 const getStatusIcon = (status) => {
   switch (status) {
+    case 'operational':
     case 'healthy':
       return <CheckCircleIcon sx={{ color: 'success.main' }} />;
     case 'warning':
       return <WarningIcon sx={{ color: 'warning.main' }} />;
     case 'critical':
+    case 'error':
       return <ErrorIcon sx={{ color: 'error.main' }} />;
+    case 'loading':
+      return <CheckCircleIcon sx={{ color: 'grey.500' }} />;
     default:
       return <CheckCircleIcon sx={{ color: 'grey.500' }} />;
   }
@@ -51,18 +55,24 @@ const getStatusIcon = (status) => {
 
 const getStatusColor = (status) => {
   switch (status) {
+    case 'operational':
     case 'healthy':
       return 'success';
     case 'warning':
       return 'warning';
     case 'critical':
+    case 'error':
       return 'error';
+    case 'loading':
+      return 'default';
     default:
       return 'default';
   }
 };
 
 function Header({ open, onDrawerToggle, systemStatus }) {
+  const displayStatus = systemStatus || 'operational';
+  
   return (
     <StyledAppBar position="fixed" open={open}>
       <Toolbar>
@@ -82,9 +92,9 @@ function Header({ open, onDrawerToggle, systemStatus }) {
         
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <Chip
-            icon={getStatusIcon(systemStatus)}
-            label={`System: ${systemStatus}`}
-            color={getStatusColor(systemStatus)}
+            icon={getStatusIcon(displayStatus)}
+            label={`System: ${displayStatus}`}
+            color={getStatusColor(displayStatus)}
             variant="outlined"
             size="small"
           />
