@@ -5,7 +5,7 @@
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build"
+        "distDir": "frontend/build"
       }
     },
     {
@@ -15,11 +15,11 @@
   ],
   "routes": [
     {
-      "src": "/v1/(.*)",
+      "src": "/api/v1/(.*)",
       "dest": "/backend/api/index.py"
     },
     {
-      "src": "/api/(.*)",
+      "src": "/v1/(.*)",
       "dest": "/backend/api/index.py"
     },
     {
@@ -27,11 +27,22 @@
       "dest": "/backend/api/index.py"
     },
     {
-      "handle": "filesystem"
+      "src": "/static/(.*)",
+      "dest": "/frontend/static/$1",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/[^.]+",
+      "dest": "/frontend/index.html",
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate"
+      }
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/index.html"
+      "dest": "/frontend/$1"
     }
   ]
 } 
