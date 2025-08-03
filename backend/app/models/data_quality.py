@@ -1,15 +1,15 @@
-from sqlalchemy import Column, Integer, String, DateTime, Float, Text, Boolean, JSON
+from sqlalchemy import Column, Integer, String, DateTime, Float, Text, Boolean, JSON, ForeignKey
 from sqlalchemy.sql import func
 from app.core.database import Base
 
 class DataSource(Base):
     __tablename__ = "data_sources"
     
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
-    source_type = Column(String(50), nullable=False)  # csv, api, database
+    source_type = Column(String(50), nullable=False)
     source_path = Column(String(500), nullable=False)
-    schema = Column(JSON)  # Store column definitions
+    schema = Column(JSON)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     is_active = Column(Boolean, default=True)
@@ -20,13 +20,13 @@ class DataSource(Base):
 class DataQualityCheck(Base):
     __tablename__ = "data_quality_checks"
     
-    id = Column(Integer, primary_key=True, index=True)
-    data_source_id = Column(Integer, nullable=False)
-    check_type = Column(String(100), nullable=False)  # missing_values, duplicates, schema_drift, etc.
-    check_result = Column(JSON, nullable=False)  # Store detailed results
-    status = Column(String(20), nullable=False)  # passed, failed, warning
-    score = Column(Float)  # Quality score 0-1
-    details = Column(Text)  # Additional details
+    id = Column(Integer, primary_key=True)
+    data_source_id = Column(Integer, ForeignKey("data_sources.id"), nullable=False)
+    check_type = Column(String(100), nullable=False)
+    check_result = Column(JSON, nullable=False)
+    status = Column(String(20), nullable=False)
+    score = Column(Float)
+    details = Column(Text)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     
     def __repr__(self):

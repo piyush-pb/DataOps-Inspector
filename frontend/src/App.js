@@ -10,6 +10,7 @@ import DataQuality from './pages/DataQuality';
 import ModelMonitoring from './pages/ModelMonitoring';
 import Alerts from './pages/Alerts';
 import Settings from './pages/Settings';
+import RetoolDashboard from './components/RetoolDashboard';
 
 const drawerWidth = 240;
 
@@ -79,6 +80,7 @@ function App() {
             <Route path="/model-monitoring" element={<ModelMonitoring />} />
             <Route path="/alerts" element={<Alerts />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/retool-dashboard" element={<RetoolDashboard />} />
           </Routes>
         </Container>
       </Main>

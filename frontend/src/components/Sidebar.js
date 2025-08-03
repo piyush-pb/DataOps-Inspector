@@ -16,6 +16,7 @@ import {
   Psychology as ModelIcon,
   Notifications as AlertsIcon,
   Settings as SettingsIcon,
+  Analytics as RetoolIcon,
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 
@@ -52,6 +53,7 @@ const menuItems = [
   { text: 'Data Quality', icon: <DataQualityIcon />, path: '/data-quality' },
   { text: 'Model Monitoring', icon: <ModelIcon />, path: '/model-monitoring' },
   { text: 'Alerts', icon: <AlertsIcon />, path: '/alerts' },
+  { text: 'Retool Dashboard', icon: <RetoolIcon />, path: '/retool-dashboard' },
   { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
 ];
 

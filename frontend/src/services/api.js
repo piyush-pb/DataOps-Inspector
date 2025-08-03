@@ -1,10 +1,12 @@
 import axios from 'axios';
 
-// Get API URL from environment or use localhost for development
+// Get API URL from environment or use proxy server for development
 const API_URL = process.env.REACT_APP_API_URL || 
                 (process.env.NODE_ENV === 'production' 
                   ? `${window.location.protocol}//${window.location.host}`
-                  : 'http://localhost:8000');
+                  : 'http://localhost:3002');
+
+console.log('API URL:', API_URL); // Debug log
 
 // Create axios instance with updated configuration
 const api = axios.create({
@@ -13,11 +15,13 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: false, // Disable credentials for CORS
 });
 
 // Request interceptor
 api.interceptors.request.use(
   (config) => {
+    console.log('Making request to:', config.url); // Debug log
     // Add auth token if available
     const token = localStorage.getItem('authToken');
     if (token) {
@@ -26,6 +30,7 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
+    console.error('Request error:', error);
     return Promise.reject(error);
   }
 );
@@ -33,10 +38,16 @@ api.interceptors.request.use(
 // Response interceptor
 api.interceptors.response.use(
   (response) => {
+    console.log('Response received:', response.status, response.config.url);
     return response;
   },
   (error) => {
     console.error('API Error:', error.response?.data || error.message);
+    console.error('Error details:', {
+      status: error.response?.status,
+      url: error.config?.url,
+      method: error.config?.method
+    });
     return Promise.reject(error);
   }
 );
